@@ -20,6 +20,22 @@ export type ParagraphProps = {
    * Font size
    */
   size: SizeName;
+
+  /**
+   * If true, margin-bottom will be removed
+   */
+  single?: boolean;
+
+  /**
+   * If true, text will not wrap
+   */
+  noWrap?: boolean;
+
+  /**
+   * If true, text will be truncated
+   */
+  ellipsis?: boolean;
+
   /**
    * Font weight
    */
@@ -31,36 +47,41 @@ export type ParagraphProps = {
 };
 
 const paragraphStyle = (theme: Theme) => css`
-  line-height: 125%;
-  letter-spacing: -0.02em;
-  font-family: ${theme.fonts.primary};
+  margin: 0;
+  line-height: 150%;
+  font-family: ${theme.fonts.primary.family};
 `;
 
 export const Paragraph: FC<ParagraphProps> = ({
   children,
   color,
   size,
+  single = false,
+  noWrap = false,
+  ellipsis = false,
   weight = 'regular',
   customStyle,
 }) => {
-  const colorStyle = (theme: Theme) => {
+  const dynamicStyle = (theme: Theme) => {
     const colorValue = theme.colors[color];
     if (!colorValue) throw new Error(`Color ${color} is not defined`);
 
     return css`
       color: ${colorValue};
+      font-size: ${theme.fontSizes[size]};
+      font-weight: ${theme.fonts.primary.weights[weight]};
+      ${!single && `margin-bottom: ${theme.paragraphGaps[size]};`}
+      ${noWrap && 'white-space: nowrap;'}
+      ${ellipsis && `
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      `}
     `;
   };
-  const sizeStyle = (theme: Theme) => css`
-    font-size: ${theme.fontSizes[size]};
-    margin-bottom: ${theme.paragraphGaps[size]};
-  `;
-  const weightStyle = (theme: Theme) => css`
-    font-weight: ${theme.fonts.primary.weights[weight]};
-  `;
 
   return (
-    <p css={[paragraphStyle, colorStyle, sizeStyle, weightStyle, customStyle]}>
+    <p css={[paragraphStyle, dynamicStyle, customStyle]}>
       {children}
     </p>
   );

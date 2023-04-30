@@ -10,7 +10,7 @@ type BackgroundColorType = 'background';
 
 type OutlineColorType = 'outline';
 
-export type AccentColorName =
+export type AccentBaseColorName =
 	| AccentColorType
 	| `${AccentColorType}.container`
 
@@ -18,7 +18,7 @@ export type AccentContentColorName =
 	| `on${Capitalize<AccentColorType>}`
 	| `on${Capitalize<AccentColorType>}.container`;
 
-export type SurfaceColorName =
+export type SurfaceBaseColorName =
 	| SurfaceColorType
 	| `${SurfaceColorType}.variant`;
 
@@ -26,7 +26,7 @@ export type SurfaceContentColorName =
 	| `on${Capitalize<SurfaceColorType>}`
 	| `on${Capitalize<SurfaceColorType>}.variant`;
 
-export type BackgroundColorName =
+export type BackgroundBaseColorName =
 	| BackgroundColorType;
 
 export type BackgroundContentColorName =
@@ -35,10 +35,9 @@ export type BackgroundContentColorName =
 export type OutlineColorName = OutlineColorType;
 
 export type ThemeBaseColorName =
-	| AccentColorName
-	| SurfaceColorName
-	| BackgroundColorName
-	| OutlineColorName;
+	| AccentBaseColorName
+	| SurfaceBaseColorName
+	| BackgroundBaseColorName;
 
 export type ThemeContentColorName = 
 	| AccentContentColorName
@@ -47,7 +46,8 @@ export type ThemeContentColorName =
 
 export type ThemeColorName =
 	| ThemeBaseColorName
-	| ThemeContentColorName;
+	| ThemeContentColorName
+	| OutlineColorName;
 
 export type ColorCode = `#${string}`;
 
@@ -105,4 +105,14 @@ export const darkColors: ThemeColors = {
 	'surface.variant': '#42474e',
 	'onSurface.variant': '#c2c7cf',
 	'outline': '#8c9199',
+};
+
+export const getContentColorName = (baseColorName: ThemeBaseColorName): ThemeContentColorName => {
+	const capitalized = baseColorName.charAt(0).toUpperCase() + baseColorName.slice(1);
+	return `on${capitalized}` as ThemeContentColorName;
+}
+
+export const getBaseColorName = (contentColorName: ThemeContentColorName): ThemeBaseColorName => {
+	const baseColorName = contentColorName.replace('on', '').toLowerCase();
+	return baseColorName as ThemeBaseColorName;
 };

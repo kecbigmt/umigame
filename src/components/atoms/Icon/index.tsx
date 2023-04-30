@@ -12,6 +12,8 @@ import {
   BsMicMuteFill,
   BsKeyboard,
   BsTrash,
+  BsQuestionSquare,
+  BsQuestionSquareFill,
 } from 'react-icons/bs';
 import { useTheme, Theme, Interpolation } from '@emotion/react';
 
@@ -28,7 +30,9 @@ export type IconName =
   | 'micOn'
   | 'micOff'
   | 'keyboard'
-  | 'trash';
+  | 'trash'
+  | 'questionSquare'
+  | 'questionSquareFill';
 
 export type IconProps = {
   /**
@@ -78,6 +82,10 @@ export const Icon: FC<IconProps> = ({ name, color, size, customStyle }) => {
         return <BsKeyboard css={customStyle} />;
       case 'trash':
         return <BsTrash css={customStyle} />;
+	  case 'questionSquare':
+		return <BsQuestionSquare css={customStyle} />;
+	  case 'questionSquareFill':
+		return <BsQuestionSquareFill css={customStyle} />;
       default:
         return null;
     }

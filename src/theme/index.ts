@@ -1,18 +1,20 @@
 import { ThemeColors, darkColors } from './colors';
 import { ThemeFonts, defaultFonts } from './fonts';
 import { ThemeParagraphGaps, defaultParagraphGaps } from './paragraphGaps';
-import { ThemeSizes, defaultSizes } from './sizes';
+import { ThemeSizes, defaultFontSizes, defaultIconSizes } from './sizes';
 
 export type Theme = {
     fonts: ThemeFonts,
-    sizes: ThemeSizes,
+    fontSizes: ThemeSizes,
+    iconSizes: ThemeSizes,
     paragraphGaps: ThemeParagraphGaps,
     colors: ThemeColors,
 }
 
 export const darkTheme = {
     fonts: defaultFonts,
-    sizes: defaultSizes,
+    fontSizes: defaultFontSizes,
+    iconSizes: defaultIconSizes,
     paragraphGaps: defaultParagraphGaps,
     colors: darkColors,
 }

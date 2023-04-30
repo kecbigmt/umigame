@@ -43,7 +43,7 @@ export const Paragraph: FC<ParagraphProps> = ({ children, color, size, weight = 
         margin-bottom: ${theme.paragraphGaps[size]};
     `;
     const weightStyle = (theme: Theme) => css`
-        font-weight: ${theme.fonts.primaryWeights[weight]};
+        font-weight: ${theme.fonts.primary.weights[weight]};
     `;
 
     return (

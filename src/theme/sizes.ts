@@ -17,3 +17,11 @@ export const defaultIconSizes: ThemeSizes = {
     lg: '1.40625rem', // 1.125rem * 1.25
     xl: '1.5625rem',  // 1.25rem * 1.25
 };
+
+export const defaultBorderRaduis: ThemeSizes = {
+    xs: '0.125rem',
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '0.75rem',
+    xl: '1rem',
+}

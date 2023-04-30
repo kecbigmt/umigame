@@ -11,9 +11,9 @@ export const defaultFontSizes: ThemeSizes = {
 };
 
 export const defaultIconSizes: ThemeSizes = {
-    xs: '1rem',
-    sm: '1.25rem',
-    md: '1.5rem',
-    lg: '1.75rem',
-    xl: '2rem',
+    xs: '0.875rem',   // 0.75rem * 1.25
+    sm: '1.09375rem', // 0.875rem * 1.25
+    md: '1.25rem',
+    lg: '1.40625rem', // 1.125rem * 1.25
+    xl: '1.5625rem',  // 1.25rem * 1.25
 };

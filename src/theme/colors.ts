@@ -1,48 +1,42 @@
-type AccentColorType =
+export type AccentBaseColorName =
 	| 'primary'
 	| 'secondary'
 	| 'tertiary'
 	| 'error';
 
-type SurfaceColorType = 'surface';
+export type OnAccentBaseColorName = `on${Capitalize<AccentBaseColorName>}`;
 
-type BackgroundColorType = 'background';
+export type AccentContainerColorName = `${AccentBaseColorName}.container`;
 
-type OutlineColorType = 'outline';
+export type OnAccentContainerColorName = `on${Capitalize<AccentContainerColorName>}`;
 
-export type AccentBaseColorName =
-	| AccentColorType
-	| `${AccentColorType}.container`
+export type SurfaceBaseColorName = 'surface';
 
-export type AccentContentColorName =
-	| `on${Capitalize<AccentColorType>}`
-	| `on${Capitalize<AccentColorType>}.container`;
+export type OnSufaceBaseColorName = `on${Capitalize<SurfaceBaseColorName>}`;
 
-export type SurfaceBaseColorName =
-	| SurfaceColorType
-	| `${SurfaceColorType}.variant`;
+export type SurfaceVariantColorName = `${SurfaceBaseColorName}.variant`;
 
-export type SurfaceContentColorName =
-	| `on${Capitalize<SurfaceColorType>}`
-	| `on${Capitalize<SurfaceColorType>}.variant`;
+export type OnSufaceVariantColorName = `on${Capitalize<SurfaceVariantColorName>}`;
 
-export type BackgroundBaseColorName =
-	| BackgroundColorType;
+export type BackgroundColorName = 'background';
 
-export type BackgroundContentColorName =
-	| `on${Capitalize<BackgroundColorType>}`;
+export type OnBackgroundColorName = `on${Capitalize<BackgroundColorName>}`;
 
-export type OutlineColorName = OutlineColorType;
+export type OutlineColorName = 'outline';
 
 export type ThemeBaseColorName =
 	| AccentBaseColorName
+	| AccentContainerColorName
 	| SurfaceBaseColorName
-	| BackgroundBaseColorName;
+	| SurfaceVariantColorName
+	| BackgroundColorName;
 
 export type ThemeContentColorName = 
-	| AccentContentColorName
-	| SurfaceContentColorName	
-	| BackgroundContentColorName;
+	| OnAccentBaseColorName
+	| OnAccentContainerColorName
+	| OnSufaceBaseColorName
+	| OnSufaceVariantColorName
+	| OnBackgroundColorName;
 
 export type ThemeColorName =
 	| ThemeBaseColorName

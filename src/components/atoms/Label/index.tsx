@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { css, Theme } from '@emotion/react';
 
-import { OnColorName, SizeName, FontWeightName, ThemeFontName } from '../../../theme'; 
+import { ThemeContentColorName, SizeName, FontWeightName, ThemeFontName } from '../../../theme'; 
 
 export type LabelProps = {
     /**
@@ -11,7 +11,7 @@ export type LabelProps = {
     /**
      * Color of the text
      */
-    color: OnColorName,
+    color: ThemeContentColorName,
     /**
      * Font size
      */

@@ -15,7 +15,7 @@ import {
 } from 'react-icons/bs';
 import { useTheme } from '@emotion/react';
 
-import { OnColorName, SizeName } from '../../../theme';
+import { ThemeContentColorName, SizeName } from '../../../theme';
 
 export type IconName =
 	| 'chevronUp'
@@ -32,7 +32,7 @@ export type IconName =
 
 export type IconProps = {
 	name: IconName;
-  color: OnColorName;
+  color: ThemeContentColorName;
   size: SizeName;
 };
 

@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     children: 'マイクで話す',
-    color: 'onPrimary.base',
+    color: 'onPrimary',
     size: 'md',
     weight: 'regular',
     font: 'primary',
@@ -26,7 +26,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
     args: {
       children: 'Q.',
-      color: 'onPrimary.base',
+      color: 'onPrimary',
       size: 'md',
       weight: 'bold',
       font: 'secondary',

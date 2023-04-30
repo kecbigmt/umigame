@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 export const OnPrimaryBase: Story = {
   args: {
     children: 'ぼくは学校から帰る途中たびたびカムパネルラのうちにはアルコールランプで走る汽車があったらしいのでした。',
-    color: 'onPrimary.base',
+    color: 'onPrimary',
     size: 'md',
     weight: 'regular',
   },

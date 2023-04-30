@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { css, Theme } from '@emotion/react';
 
-import { OnColorName, SizeName, FontWeightName } from '../../../theme'; 
+import { ThemeContentColorName, SizeName, FontWeightName } from '../../../theme'; 
 
 export type ParagraphProps = {
     /**
@@ -11,7 +11,7 @@ export type ParagraphProps = {
     /**
      * Color of the text
      */
-    color: OnColorName,
+    color: ThemeContentColorName,
     /**
      * Font size
      */

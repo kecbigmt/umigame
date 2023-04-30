@@ -17,6 +17,6 @@ export const MicOn: Story = {
   args: {
     name: 'micOn',
     size: 'md',
-    color: 'onPrimary.base',
+    color: 'onPrimary',
   },
 };

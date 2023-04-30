@@ -56,7 +56,7 @@ export const ChatBubble: FC<ChatBubbleProps> = ({
 
   return (
     <div css={[bubbleStyle, customStyle]}>
-      <Paragraph color={contentColor} size="sm">
+      <Paragraph color={contentColor} size="sm" single>
         {children}
       </Paragraph>
     </div>

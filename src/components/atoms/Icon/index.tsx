@@ -7,7 +7,7 @@ import {
   BsChevronRight,
   BsX,
   BsList,
-  BsFillCheckCircleFill,
+	BsCheck,
   BsFillMicFill,
   BsMicMuteFill,
   BsKeyboard,
@@ -26,7 +26,7 @@ export type IconName =
   | 'chevronRight'
   | 'close'
   | 'menu'
-  | 'doneFill'
+	| 'check'
   | 'micOn'
   | 'micOff'
   | 'keyboard'
@@ -72,8 +72,8 @@ export const Icon: FC<IconProps> = ({ name, color, size, customStyle }) => {
         return <BsX css={customStyle} />;
       case 'menu':
         return <BsList css={customStyle} />;
-      case 'doneFill':
-        return <BsFillCheckCircleFill css={customStyle} />;
+			case 'check':
+				return <BsCheck css={customStyle} />;
       case 'micOn':
         return <BsFillMicFill css={customStyle} />;
       case 'micOff':

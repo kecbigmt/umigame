@@ -32,8 +32,6 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
     border: none;
     border-radius: ${theme.borderRadius.md};
 		gap: 0.5rem;
-		
-		width: calc(100% - 1rem * 2);
 		padding: 0.5rem 0.25rem 0.5rem 1rem;
   `;
 

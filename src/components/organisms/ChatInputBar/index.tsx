@@ -32,21 +32,27 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
   };
 
   const chatInputBarStyle = (theme: Theme) => css`
+    background-color: ${theme.colors['surface']};
+    ${inputInterface === 'mic' && 'position: relative;'}
+  `;
+
+  const chatInputContainerStyle = css`
     display: flex;
     align-items: ${inputInterface === 'none' ? 'center' : 'flex-end'};
     justify-content: ${inputInterface === 'none' ? 'center' : 'space-between'};
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 0.5rem;
+  `;
 
-    background-color: ${theme.colors.surface};
-    ${inputInterface === 'mic' && 'position: relative;'}
+  const chatTextAreaStyle = css`
+    flex-grow: 1;
   `;
 
   const speechToTextInputStyle = css`
     position: absolute;
-    bottom: calc(100% + 0.25rem);
-    right: 0;
-		width: 80%;
+    bottom: calc(100% + 0.5rem);
+    right: 0.5rem;
+    width: 80%;
   `;
 
   const onMicOn = () => {
@@ -65,62 +71,77 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
     setText('');
   };
 
-  return inputInterface === 'keyboard' ? (
-    <form css={[chatInputBarStyle, customStyle]} onSubmit={onSubmit}>
-      <Button type="icon" color="onSurface" icon="micOn" onClick={enableMic} />
-      <ChatTextArea
-        value={text}
-        onTextChange={onTextChange}
-        onClickClearButton={onClickClearButton}
-        color="secondary"
-      />
-      <Button
-        submit
-        type="filledIcon"
-        color="primary"
-        icon="check"
-        onClick={micOn ? onMicOff : onMicOn}
-        disabled={text === ''}
-      />
-    </form>
-  ) : inputInterface === 'mic' ? (
+  return (
     <div css={[chatInputBarStyle, customStyle]}>
-      <Button
-        type="icon"
-        color="onSurface"
-        icon={micOn ? 'micOn' : 'micOff'}
-        onClick={micOn ? onMicOff : onMicOn}
-      />
-      <Button
-        type="icon"
-        color="onSurface"
-        icon="keyboard"
-        onClick={enableKeyboard}
-      />
-      {text && (
-        <div css={speechToTextInputStyle}>
+      {inputInterface === 'keyboard' ? (
+        <form css={chatInputContainerStyle} onSubmit={onSubmit}>
+          <Button
+            type="icon"
+            color="onSurface"
+            icon="micOn"
+            onClick={enableMic}
+          />
           <ChatTextArea
             value={text}
             onTextChange={onTextChange}
             onClickClearButton={onClickClearButton}
-            color="secondary"
+            color="secondary.container"
+            customStyle={chatTextAreaStyle}
           />
+          <Button
+            submit
+            type="filledIcon"
+            color="primary"
+            icon="check"
+            onClick={micOn ? onMicOff : onMicOn}
+            disabled={text === ''}
+          />
+        </form>
+      ) : inputInterface === 'mic' ? (
+        <div css={chatInputContainerStyle}>
+          <Button
+            type="icon"
+            color="onSurface"
+            icon={micOn ? 'micOn' : 'micOff'}
+            onClick={micOn ? onMicOff : onMicOn}
+          />
+          <Button
+            type="icon"
+            color="onSurface"
+            icon="keyboard"
+            onClick={enableKeyboard}
+          />
+          {text && (
+            <div css={speechToTextInputStyle}>
+              <ChatTextArea
+                value={text}
+                onTextChange={onTextChange}
+                onClickClearButton={onClickClearButton}
+                color="secondary.container"
+              />
+            </div>
+          )}
+        </div>
+      ) : (
+        <div css={chatInputContainerStyle}>
+          <Button
+            type="filled"
+            color="primary"
+            icon="micOn"
+            onClick={enableMic}
+          >
+            マイクで話す
+          </Button>
+          <Button
+            type="text"
+            color="onSurface"
+            icon="keyboard"
+            onClick={enableKeyboard}
+          >
+            文字入力
+          </Button>
         </div>
       )}
-    </div>
-  ) : (
-    <div css={[chatInputBarStyle, customStyle]}>
-      <Button type="filled" color="primary" icon="micOn" onClick={enableMic}>
-        マイクで話す
-      </Button>
-      <Button
-        type="text"
-        color="onSurface"
-        icon="keyboard"
-        onClick={enableKeyboard}
-      >
-        文字入力
-      </Button>
     </div>
   );
 };

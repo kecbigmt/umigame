@@ -41,7 +41,6 @@ export const ChatHistory: FC<ChatHistoryProps> = ({
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 1rem;
 		gap: 0.5rem;
   `;
 
@@ -50,7 +49,7 @@ export const ChatHistory: FC<ChatHistoryProps> = ({
       {messages.map((message, index) => (
         <ChatBubble
           key={index}
-          color={message.owner === 'user' ? 'secondary' : 'surface'}
+          color={message.owner === 'user' ? 'secondary' : 'surface.variant'}
           position={message.owner === 'user' ? 'right' : 'left'}
 					customStyle={css`
 						margin-${message.owner === 'user' ? 'left' : 'right'}: auto;
@@ -61,7 +60,7 @@ export const ChatHistory: FC<ChatHistoryProps> = ({
       ))}
       {botLoading && (
         <ChatBubble
-          color="surface"
+          color="surface.variant"
           position="left"
         >{'loading...'}</ChatBubble>
       )}

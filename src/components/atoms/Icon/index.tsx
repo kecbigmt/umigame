@@ -6,8 +6,9 @@ import {
   BsChevronLeft,
   BsChevronRight,
   BsX,
+  BsXCircleFill,
   BsList,
-	BsCheck,
+  BsCheck,
   BsFillMicFill,
   BsMicMuteFill,
   BsKeyboard,
@@ -25,8 +26,9 @@ export type IconName =
   | 'chevronLeft'
   | 'chevronRight'
   | 'close'
+  | 'closeCircleFill'
   | 'menu'
-	| 'check'
+  | 'check'
   | 'micOn'
   | 'micOff'
   | 'keyboard'
@@ -70,10 +72,12 @@ export const Icon: FC<IconProps> = ({ name, color, size, customStyle }) => {
         return <BsChevronRight css={customStyle} />;
       case 'close':
         return <BsX css={customStyle} />;
+      case 'closeCircleFill':
+        return <BsXCircleFill css={customStyle} />;
       case 'menu':
         return <BsList css={customStyle} />;
-			case 'check':
-				return <BsCheck css={customStyle} />;
+      case 'check':
+        return <BsCheck css={customStyle} />;
       case 'micOn':
         return <BsFillMicFill css={customStyle} />;
       case 'micOff':
@@ -82,10 +86,10 @@ export const Icon: FC<IconProps> = ({ name, color, size, customStyle }) => {
         return <BsKeyboard css={customStyle} />;
       case 'trash':
         return <BsTrash css={customStyle} />;
-	  case 'questionSquare':
-		return <BsQuestionSquare css={customStyle} />;
-	  case 'questionSquareFill':
-		return <BsQuestionSquareFill css={customStyle} />;
+      case 'questionSquare':
+        return <BsQuestionSquare css={customStyle} />;
+      case 'questionSquareFill':
+        return <BsQuestionSquareFill css={customStyle} />;
       default:
         return null;
     }

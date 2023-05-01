@@ -44,3 +44,11 @@ export const Icon: Story = {
     color: 'onPrimary',
   },
 };
+
+export const FilledIcon: Story = {
+  args: {
+    type: 'filledIcon',
+    icon: 'check',
+    color: 'primary',
+  },
+};

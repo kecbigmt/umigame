@@ -34,16 +34,26 @@ export type IconButtonProps = {
   icon: IconName;
 } & Omit<ButtonBaseProps, 'contentColor' | 'iconPosition'>;
 
+export type FilledIconButtonProps = {
+  type: 'filledIcon';
+  color: ThemeBaseColorName;
+  icon: IconName;
+} & Omit<ButtonBaseProps, 'contentColor' | 'iconPosition'>;
+
 export type ButtonProps =
   | FilledButtonProps
   | OutlinedButtonProps
   | TextButtonProps
-  | IconButtonProps;
+  | IconButtonProps
+  | FilledIconButtonProps;
 
 export const Button: FC<ButtonProps> = (props) => {
   const { type, children, color, customStyle, ...otherProps } = props;
 
-  const contentColor = type === 'filled' ? getContentColorName(color) : color;
+  const contentColor =
+    type === 'filled' || type === 'filledIcon'
+      ? getContentColorName(color)
+      : color;
   const buttonStyle = getButtonStyle(props);
 
   return (
@@ -61,7 +71,7 @@ const getButtonStyle = ({ type, color }: ButtonProps) => {
   switch (type) {
     case 'filled':
       return (theme: Theme) => css`
-				border: none;
+        border: none;
         background-color: ${theme.colors[color]};
 
         &:hover:not(:disabled) {
@@ -96,8 +106,18 @@ const getButtonStyle = ({ type, color }: ButtonProps) => {
         padding: 0.25rem;
 
         &:hover:not(:disabled) {
-					background-color: ${theme.colors[baseColor]};
+          background-color: ${theme.colors[baseColor]};
           box-shadow: 0 0 0 0.125rem ${theme.colors[baseColor]};
+        }
+      `;
+    case 'filledIcon':
+      return (theme: Theme) => css`
+        border: none;
+        background-color: ${theme.colors[color]};
+        padding: 0.25rem;
+
+        &:hover:not(:disabled) {
+          box-shadow: 0 0 0 0.125rem ${theme.colors[color]};
         }
       `;
     default:

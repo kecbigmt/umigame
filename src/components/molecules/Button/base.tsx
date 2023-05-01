@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import { css, Theme, Interpolation } from '@emotion/react';
 import { Icon, IconName } from '../../atoms/Icon';
 
@@ -20,12 +20,17 @@ export type ButtonBaseProps = {
    * Function to be called when the button is clicked
    * @returns {void}
    */
-  onClick: () => void;
+  onClick: MouseEventHandler;
 
   /**
    * If true, the button will be disabled
    */
   disabled?: boolean;
+
+  /**
+   * If true, the button will be submit button
+   */
+  submit?: boolean;
 
   /**
    * Icon to be displayed
@@ -51,6 +56,7 @@ export const ButtonBase: FC<ButtonBaseProps> = ({
   children,
   onClick,
   disabled = false,
+  submit = false,
   icon,
   iconPosition = 'inner',
   customStyle,
@@ -91,6 +97,7 @@ export const ButtonBase: FC<ButtonBaseProps> = ({
 
   return (
     <button
+      type={submit ? 'submit' : 'button'}
       css={[buttonStyle, customStyle]}
       onClick={onClick}
       disabled={disabled}

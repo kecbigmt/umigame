@@ -1,11 +1,11 @@
-import { ChangeEvent, FC, FormEventHandler, useState } from 'react';
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
 import { css, Theme, Interpolation } from '@emotion/react';
 
 import { Button } from '../../molecules/Button';
 import { ChatTextArea } from '../../molecules/ChatTextArea';
 
 export type ChatInputBarProps = {
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmitMessage: (message: string) => void;
   customStyle?: Interpolation<Theme>;
 };
 
@@ -13,7 +13,7 @@ export type ChatInputBarProps = {
  * ChatInputBar component
  * */
 export const ChatInputBar: FC<ChatInputBarProps> = ({
-  onSubmit,
+  onSubmitMessage,
   customStyle,
 }) => {
   const [text, setText] = useState('');
@@ -68,6 +68,12 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
   };
 
   const onClickClearButton = () => {
+    setText('');
+  };
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmitMessage(text);
     setText('');
   };
 

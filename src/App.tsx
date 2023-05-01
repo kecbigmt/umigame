@@ -6,12 +6,15 @@ import { Theme, darkTheme } from './theme';
 import { ChatHistory, ChatMessage } from './components/organisms/ChatHistory';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
+import { useChain } from './hooks/useChain';
+
+const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 function App() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { text: 'Hello', owner: 'user' },
-    { text: 'Hi', owner: 'bot' },
-  ]);
+  const chain = useChain(openAIApiKey);
+
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [botLoading, setBotLoading] = useState(false);
 
   const globalStyle = (theme: Theme) => css`
     body {
@@ -42,16 +45,31 @@ function App() {
     max-width: 600px;
   `;
 
-  const onSubmitMessage = (message: string) => {
-    setMessages([...messages, { text: message, owner: 'user' }]);
-  }
+  const onSubmitMessage = async (message: string) => {
+    const newMessages: ChatMessage[] = [...messages, { text: message, owner: 'user' }];
+    setMessages(newMessages);
+    setBotLoading(true);
+
+    chain.call({ input: message }).then((res) => {
+      setBotLoading(false);
+
+      const responseMessage = res['response'];
+      if (typeof responseMessage !== 'string')
+        throw new Error('Invalid response from OpenAI API');
+      
+      setMessages([...newMessages, { text: responseMessage, owner: 'bot' }]);
+    }).catch(() => {
+      setBotLoading(false);
+      setMessages([...newMessages, { text: 'エラーが発生しました。', owner: 'bot' }]);
+    });
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Global styles={globalStyle} />
       <TopAppBar
         color="transparent"
-        title="銀河鉄道の夜" 
+        title="銀河鉄道の夜"
         trailingAction={{
           icon: 'threeDots',
           onClick: () => console.log('settings'),
@@ -68,9 +86,12 @@ function App() {
             'どこでできるのですか青年は笑いながら言いました。',
           ]}
         />
-        <ChatHistory messages={messages} />
+        <ChatHistory messages={messages} botLoading={botLoading} />
       </main>
-      <ChatInputBar onSubmitMessage={onSubmitMessage} customStyle={chatInputBar} />
+      <ChatInputBar
+        onSubmitMessage={onSubmitMessage}
+        customStyle={chatInputBar}
+      />
     </ThemeProvider>
   );
 }

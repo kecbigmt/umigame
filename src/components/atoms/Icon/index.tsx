@@ -15,6 +15,7 @@ import {
   BsTrash,
   BsQuestionSquare,
   BsQuestionSquareFill,
+  BsThreeDots,
 } from 'react-icons/bs';
 import { useTheme, Theme, Interpolation } from '@emotion/react';
 
@@ -34,7 +35,8 @@ export type IconName =
   | 'keyboard'
   | 'trash'
   | 'questionSquare'
-  | 'questionSquareFill';
+  | 'questionSquareFill'
+  | 'threeDots';
 
 export type IconProps = {
   /**
@@ -90,6 +92,8 @@ export const Icon: FC<IconProps> = ({ name, color, size, customStyle }) => {
         return <BsQuestionSquare css={customStyle} />;
       case 'questionSquareFill':
         return <BsQuestionSquareFill css={customStyle} />;
+      case 'threeDots':
+        return <BsThreeDots css={customStyle} />;
       default:
         return null;
     }

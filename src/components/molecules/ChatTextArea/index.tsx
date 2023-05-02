@@ -26,13 +26,13 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
 
   const inputWrapperStyle = (theme: Theme) => css`
     display: flex;
-		align-items: center;
-		justify-content: space-between;
+    align-items: center;
+    justify-content: space-between;
     background-color: ${theme.colors[color]};
     border: none;
     border-radius: ${theme.borderRadius.md};
-		gap: 0.5rem;
-		padding: 0.5rem 0.25rem 0.5rem 1rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0.25rem 0.5rem 1rem;
   `;
 
   const inputStyle = (theme: Theme) => css`
@@ -63,7 +63,7 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
   `;
 
   const clearButtonStyle = css`
-		flex-shrink: 0;
+    flex-shrink: 0;
   `;
 
   return (
@@ -72,15 +72,17 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
         css={[inputStyle, customStyle]}
         value={value}
         onChange={onTextChange}
-				rows={2}
+        rows={2}
       />
-      <Button
-        type="icon"
-        icon="closeCircleFill"
-        color={contentColor}
-        onClick={onClickClearButton}
-        customStyle={clearButtonStyle}
-      />
+      {value !== '' && (
+        <Button
+          type="icon"
+          icon="closeCircleFill"
+          color={contentColor}
+          onClick={onClickClearButton}
+          customStyle={clearButtonStyle}
+        />
+      )}
     </div>
   );
 };

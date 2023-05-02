@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
 
 import { Theme, darkTheme } from './theme';
@@ -80,6 +80,14 @@ function App() {
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [botLoading, setBotLoading] = useState(false);
+
+  // When new message is added, scroll to bottom
+  useEffect(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  }, [messages]);
 
   const onSubmitMessage = async (message: string) => {
     const newMessages: ChatMessage[] = [

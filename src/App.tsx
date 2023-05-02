@@ -48,7 +48,7 @@ const headerStyle = css`
 const quizAccordionStyle = css`
   width: calc(100% - 2rem);
   max-width: 600px;
-  margin: 0 1rem;
+  margin: 0 auto;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.7);
 `;
 

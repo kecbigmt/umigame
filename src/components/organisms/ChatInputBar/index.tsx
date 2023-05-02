@@ -42,6 +42,7 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
     justify-content: ${inputInterface === 'none' ? 'center' : 'space-between'};
     gap: 0.5rem;
     padding: 0.75rem 0.5rem;
+    width: 100%;
   `;
 
   const chatTextAreaStyle = css`

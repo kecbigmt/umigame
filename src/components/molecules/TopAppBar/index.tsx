@@ -67,7 +67,7 @@ export const TopAppBar: FC<TopAppBarProps> = ({
     color === 'transparent' ? 'onBackground' : getContentColorName(color);
 
   return (
-    <header css={[AppBarStyle, customStyle]}>
+    <div css={[AppBarStyle, customStyle]}>
       {leadingNavigation ? (
         <Button
           type="icon"
@@ -93,6 +93,6 @@ export const TopAppBar: FC<TopAppBarProps> = ({
       ) : (
         <div />
       )}
-    </header>
+    </div>
   );
 };

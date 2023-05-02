@@ -24,6 +24,10 @@ export type ChatTimelineProps = {
   customStyle?: Interpolation<Theme>;
 };
 
+const chatBubbleStyle = css`
+  max-width: 80%;
+`;
+
 /**
  * ChatTimeline component
  * */
@@ -48,6 +52,7 @@ export const ChatTimeline: FC<ChatTimelineProps> = ({
           color={message.owner === 'user' ? 'secondary' : 'surface.variant'}
           position={message.owner === 'user' ? 'right' : 'left'}
 					customStyle={css`
+            ${chatBubbleStyle}
 						margin-${message.owner === 'user' ? 'left' : 'right'}: auto;
 					`}
         >
@@ -58,6 +63,7 @@ export const ChatTimeline: FC<ChatTimelineProps> = ({
         <ChatBubble
           color="surface.variant"
           position="left"
+          customStyle={chatBubbleStyle}
         >{'loading...'}</ChatBubble>
       )}
     </div>

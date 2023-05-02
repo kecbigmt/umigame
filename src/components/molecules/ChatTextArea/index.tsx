@@ -8,6 +8,7 @@ export type ChatTextAreaProps = {
   value: string;
   onTextChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onClickClearButton: MouseEventHandler;
+  onPressEnter?: (value: string) => void;
   color: ThemeBaseColorName;
   customStyle?: Interpolation<Theme>;
 };
@@ -19,6 +20,7 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
   value,
   onTextChange,
   onClickClearButton,
+  onPressEnter,
   color,
   customStyle,
 }) => {
@@ -66,12 +68,20 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
     flex-shrink: 0;
   `;
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (onPressEnter && e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onPressEnter(value);
+    }
+  };
+
   return (
     <div css={[inputWrapperStyle, customStyle]}>
       <textarea
         css={[inputStyle, customStyle]}
         value={value}
         onChange={onTextChange}
+        onKeyDown={onKeyDown}
         rows={2}
       />
       {value !== '' && (

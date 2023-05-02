@@ -77,6 +77,11 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
     setText('');
   };
 
+  const onPressEnter = (value: string) => {
+    onSubmitMessage(value);
+    setText('');
+  };
+
   return (
     <div css={[chatInputBarStyle, customStyle]}>
       {inputInterface === 'keyboard' ? (
@@ -91,6 +96,7 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
             value={text}
             onTextChange={onTextChange}
             onClickClearButton={onClickClearButton}
+            onPressEnter={onPressEnter}
             color="secondary.container"
             customStyle={chatTextAreaStyle}
           />
@@ -123,6 +129,7 @@ export const ChatInputBar: FC<ChatInputBarProps> = ({
                 value={text}
                 onTextChange={onTextChange}
                 onClickClearButton={onClickClearButton}
+                onPressEnter={onPressEnter}
                 color="secondary.container"
               />
             </div>

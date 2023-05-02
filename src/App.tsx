@@ -7,12 +7,18 @@ import { TopAppBar } from './components/molecules/TopAppBar';
 import { ChatTimeline } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
-import { useChain } from './hooks/useChain';
+import { useLiteralThinkingQuizChain } from './hooks/useLiteralThinkingQuizChain';
 
 const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+const quiz = {
+  title: import.meta.env.VITE_QUIZ_TITLE as string,
+  question: import.meta.env.VITE_QUIZ_QUESTION as string,
+  answer: import.meta.env.VITE_QUIZ_ANSWER as string,
+  answerKey: import.meta.env.VITE_QUIZ_ANSWER_KEY as string,
+}
 
 function App() {
-  const chain = useChain(openAIApiKey);
+  const chain = useLiteralThinkingQuizChain(quiz, openAIApiKey);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [botLoading, setBotLoading] = useState(false);
@@ -22,7 +28,7 @@ function App() {
       background-color: ${theme.colors.background};
       color: ${theme.colors.onBackground};
       margin: 0;
-    }
+    } 
 
     #root {
       width: 100%;
@@ -53,6 +59,7 @@ function App() {
 
     chain.call({ input: message }).then((res) => {
       setBotLoading(false);
+      console.log(res);
 
       const responseMessage = res['response'];
       if (typeof responseMessage !== 'string')
@@ -70,7 +77,7 @@ function App() {
       <Global styles={globalStyle} />
       <TopAppBar
         color="transparent"
-        title="銀河鉄道の夜"
+        title={quiz.title}
         trailingAction={{
           icon: 'threeDots',
           onClick: () => console.log('settings'),
@@ -79,13 +86,7 @@ function App() {
       <main css={mainStyle}>
         <QuestionAccordion
           color="surface.variant"
-          lines={[
-            'カムパネルラ、また僕たち二人きりになったので、すこししゃくにさわってだまっていました。',
-            '一時間で行ってくるよと言いながら、自分もだんだん顔いろがかがやいてきました。',
-            'わたしの大事なタダシはいまどんな歌をうたってやすむとき、いつも窓からぼんやり白く見えていたのです。',
-            'この男は、どこか苦しいというふうではきはき談しているのでした。',
-            'どこでできるのですか青年は笑いながら言いました。',
-          ]}
+          lines={[quiz.question]}
         />
         <ChatTimeline messages={messages} botLoading={botLoading} />
       </main>

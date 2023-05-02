@@ -7,7 +7,7 @@ import { TopAppBar } from './components/molecules/TopAppBar';
 import { ChatTimeline } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
-import { useLiteralThinkingQuizChain } from './hooks/useLiteralThinkingQuizChain';
+import { useLateralThinkingQuizChain } from './hooks/useLateralThinkingQuizChain';
 
 const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
 const quiz = {
@@ -76,7 +76,7 @@ const chatInputBar = css`
 `;
 
 function App() {
-  const chain = useLiteralThinkingQuizChain(quiz, openAIApiKey);
+  const chain = useLateralThinkingQuizChain(quiz, openAIApiKey);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [botLoading, setBotLoading] = useState(false);

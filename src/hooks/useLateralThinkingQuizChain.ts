@@ -6,7 +6,7 @@ import { BufferMemory } from 'langchain/memory';
 import { PromptTemplate } from 'langchain/prompts';
 import { Quiz } from '../domain/quiz';
 
-export const useLiteralThinkingQuizChain = (quiz: Quiz, openAIApiKey: string | undefined) => {
+export const useLateralThinkingQuizChain = (quiz: Quiz, openAIApiKey: string | undefined) => {
     return useMemo(() => {
         if (!openAIApiKey) throw new Error('openAIApiKey is undefined');
 

@@ -1,12 +1,8 @@
 import { FC } from 'react';
 import { css, Theme, Interpolation } from '@emotion/react';
 
+import { ChatHistory } from '../../../domain';
 import { ChatBubble } from '../../molecules/ChatBubble';
-
-export type ChatMessage = {
-  owner: 'user' | 'bot'; // TODO: add 'friend' when multiple users are supported
-  text: string;
-};
 
 export type ChatTimelineProps = {
   /**
@@ -14,7 +10,7 @@ export type ChatTimelineProps = {
    * They are displayed in the order of the array.  
    * User message is on the right, bot message is on the left.
    * */
-  messages: ChatMessage[];
+  messages: ChatHistory;
 
   /**
    * Loading state of the bot.

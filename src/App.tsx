@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
 
-import { TopAppBar } from './components/molecules/TopAppBar';
 import { Theme, darkTheme } from './theme';
-import { ChatTimeline, ChatMessage } from './components/organisms/ChatTimeline';
+import { ChatMessage } from './domain';
+import { TopAppBar } from './components/molecules/TopAppBar';
+import { ChatTimeline } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useChain } from './hooks/useChain';

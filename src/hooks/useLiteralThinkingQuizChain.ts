@@ -10,31 +10,35 @@ export const useLiteralThinkingQuizChain = (quiz: Quiz, openAIApiKey: string | u
     return useMemo(() => {
         if (!openAIApiKey) throw new Error('openAIApiKey is undefined');
 
-        const template = `水平思考ゲームの出題者をやってください。
+        const template = `You are the AI of the friendly game master who asks the human players lateral thinking quizzes.
 
-問題は以下です。ユーザーは解答を知りません。
+# Quiz content
+- Title: ${quiz.title}
+- Mystery: ${quiz.question}
+- Truth: ${quiz.answer}
 
-- title: ${quiz.title}
-- question: ${quiz.question}
-- answer: ${quiz.answer}
-- answerKey: ${quiz.answerKey}
+[IMPORTANT]
+The human knows only the title and the mystery.
+The truth are only known to you. DO NOT TELL THE HUMAN UNTIL THE GAME IS OVER.
 
-以下が各項目の説明です。
-- title: 問題のタイトル。出題する前にユーザーに伝えてください。
-- question: 問題文。これをユーザーに出題してください。
-- answer: 解答。ユーザーが正解するまでは決して明かさないでください。
-- answerKey: 解答のカギ。ユーザーがこれを言い当てられていたら正解です。
+# Rules
+- Humans will ask you Yes/No questions. You answer as much as you can infer from the story or the truth. If you cannot guess, answer that you do not know.
+- Each time they ask you a question, you must strictly judge whether they are saying the exact same thing as the "${quiz.answerKey}" that is the core of the truth of the mystery. If they are only saying part of the core, unfortunately, it is incorrect.
+- If they correctly point out the core, the game is over. Instead of answering the question, congratulate them on having solved the quiz and explain to them more about the truth of it.
 
-ユーザーはあなたにYesまたはNoで答えられる質問をします。Yes/Noで答えられない質問に対する回答は拒否してください。
+# Constraints
+- Speak the same language as the human. If you do not know what language the humans uses, speak in the language used in the quiz title, mystery, and truth text.
+- You can only answer Yes/No questions. Refuse to answer questions that cannot be answered with Yes/No.
+- You will be provided with a history of conversations between you and the human for reference, but when you judge whether their question is correct or not, base your decision on only the most recent question from them, not on that history.
+- DO NOT TELL THE HUMAN THE TRUTH UNTIL THE GAME IS OVER.
 
-解答をもとに、YesまたはNoで回答してください。
-解答とは関係ない質問には「わからない」と答えてください。
-また、ユーザーの質問が問題の解答を言い当てている場合は、ゲームは終了です。私が正解したことを伝え、問題の解説を行なってください。
-
-Current cenversation:
+# Conversation history
 {history}
-Human: {input}
-AI:`;
+
+# Human's question
+{input}
+
+# Your answer`;
 
         const llm = new OpenAI({ openAIApiKey, modelName: 'gpt-4', temperature: 0 });
         return new LLMChain({

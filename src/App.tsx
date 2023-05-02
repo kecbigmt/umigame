@@ -3,7 +3,7 @@ import { Global, ThemeProvider, css } from '@emotion/react';
 
 import { TopAppBar } from './components/molecules/TopAppBar';
 import { Theme, darkTheme } from './theme';
-import { ChatHistory, ChatMessage } from './components/organisms/ChatHistory';
+import { ChatTimeline, ChatMessage } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useChain } from './hooks/useChain';
@@ -86,7 +86,7 @@ function App() {
             'どこでできるのですか青年は笑いながら言いました。',
           ]}
         />
-        <ChatHistory messages={messages} botLoading={botLoading} />
+        <ChatTimeline messages={messages} botLoading={botLoading} />
       </main>
       <ChatInputBar
         onSubmitMessage={onSubmitMessage}

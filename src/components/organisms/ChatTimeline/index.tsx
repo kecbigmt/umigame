@@ -8,10 +8,10 @@ export type ChatMessage = {
   text: string;
 };
 
-export type ChatHistoryProps = {
+export type ChatTimelineProps = {
   /**
    * Chat message items.
-   * They are displayed in the order of the array.
+   * They are displayed in the order of the array.  
    * User message is on the right, bot message is on the left.
    * */
   messages: ChatMessage[];
@@ -29,9 +29,9 @@ export type ChatHistoryProps = {
 };
 
 /**
- * ChatHistory component
+ * ChatTimeline component
  * */
-export const ChatHistory: FC<ChatHistoryProps> = ({
+export const ChatTimeline: FC<ChatTimelineProps> = ({
   messages,
   botLoading = false,
   customStyle,

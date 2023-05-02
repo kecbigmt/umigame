@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ChatHistory } from '.';
+import { ChatTimeline } from '.';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta = {
-  title: 'Organisms/ChatHistory',
-  component: ChatHistory,
+  title: 'Organisms/ChatTimeline',
+  component: ChatTimeline,
   tags: ['autodocs'],
-} satisfies Meta<typeof ChatHistory>;
+} satisfies Meta<typeof ChatTimeline>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

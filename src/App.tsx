@@ -148,6 +148,7 @@ function App() {
           <ChatInputBar
             onSubmitMessage={onSubmitMessage}
             customStyle={chatInputBar}
+            defaultInputInterface='keyboard'
           />
         </main>
       )}

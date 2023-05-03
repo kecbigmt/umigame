@@ -4,9 +4,12 @@ import { css, Theme, Interpolation } from '@emotion/react';
 import { Button } from '../../molecules/Button';
 import { ChatTextArea } from '../../molecules/ChatTextArea';
 
+type InputInterface = 'keyboard' | 'mic' | 'none';
+
 export type ChatInputBarProps = {
   onSubmitMessage: (message: string) => void;
   customStyle?: Interpolation<Theme>;
+  defaultInputInterface?: InputInterface;
 };
 
 /**
@@ -15,13 +18,12 @@ export type ChatInputBarProps = {
 export const ChatInputBar: FC<ChatInputBarProps> = ({
   onSubmitMessage,
   customStyle,
+  defaultInputInterface = 'none',
 }) => {
   const [text, setText] = useState('');
   const [micOn, setMicOn] = useState(false);
 
-  const [inputInterface, setInputInterface] = useState<
-    'keyboard' | 'mic' | 'none'
-  >('none');
+  const [inputInterface, setInputInterface] = useState<InputInterface>(defaultInputInterface);
 
   const enableMic = () => {
     setInputInterface('mic');

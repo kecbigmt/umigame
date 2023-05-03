@@ -6,11 +6,11 @@ import { BufferMemory } from 'langchain/memory';
 import { PromptTemplate } from 'langchain/prompts';
 import { Quiz } from '../domain/quiz';
 
-export const useLateralThinkingQuizChain = (language: string, modelName: string, openAIApiKey: string | undefined): {
+export const useLateralThinkingQuizChain = (language: string, modelName: string, openAIApiKey: string | undefined, defaultQuiz?: Quiz): {
     chain: LLMChain, 
     quiz: Quiz,
 } | undefined => {
-    const [quiz, setQuiz] = useState<Quiz | undefined>(undefined);
+    const [quiz, setQuiz] = useState<Quiz | undefined>(defaultQuiz);
 
     useEffect(() => {
         if (!openAIApiKey) throw new Error('openAIApiKey is undefined');

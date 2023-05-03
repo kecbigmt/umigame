@@ -8,8 +8,7 @@ import { ChatTimeline } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useLateralThinkingQuizChain } from './hooks/useLateralThinkingQuizChain';
-
-const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+import { openAIApiKey, quiz } from './env';
 
 const globalStyle = (theme: Theme) => css`
   html {
@@ -73,7 +72,8 @@ function App() {
   const quizSet = useLateralThinkingQuizChain(
     'Japanese',
     'gpt-4',
-    openAIApiKey
+    openAIApiKey,
+    quiz, 
   );
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);

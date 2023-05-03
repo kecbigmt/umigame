@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
+import { RecoilRoot } from 'recoil';
 
 import { Theme, darkTheme as theme } from './theme';
 import { ChatMessage } from './domain';
@@ -73,7 +74,7 @@ function App() {
     'Japanese',
     'gpt-4',
     openAIApiKey,
-    quiz, 
+    quiz
   );
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -119,40 +120,42 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Global styles={globalStyle} />
-      <header css={headerStyle}>
-        <TopAppBar
-          color="surface"
-          title={quizSet ? quizSet.quiz.title : '問題を考えています...'}
-          trailingAction={{
-            icon: 'threeDots',
-            onClick: () => console.log('settings'),
-          }}
-        />
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyle} />
+        <header css={headerStyle}>
+          <TopAppBar
+            color="surface"
+            title={quizSet ? quizSet.quiz.title : '問題を考えています...'}
+            trailingAction={{
+              icon: 'threeDots',
+              onClick: () => console.log('settings'),
+            }}
+          />
+          {quizSet && (
+            <QuestionAccordion
+              color="surface.variant"
+              lines={[quizSet.quiz.mystery]}
+              customStyle={quizAccordionStyle}
+            />
+          )}
+        </header>
         {quizSet && (
-          <QuestionAccordion
-            color="surface.variant"
-            lines={[quizSet.quiz.mystery]}
-            customStyle={quizAccordionStyle}
-          />
+          <main css={mainStyle}>
+            <ChatTimeline
+              messages={messages}
+              botLoading={botLoading}
+              customStyle={timelineStyle}
+            />
+            <ChatInputBar
+              onSubmitMessage={onSubmitMessage}
+              customStyle={chatInputBar}
+              defaultInputInterface="keyboard"
+            />
+          </main>
         )}
-      </header>
-      {quizSet && (
-        <main css={mainStyle}>
-          <ChatTimeline
-            messages={messages}
-            botLoading={botLoading}
-            customStyle={timelineStyle}
-          />
-          <ChatInputBar
-            onSubmitMessage={onSubmitMessage}
-            customStyle={chatInputBar}
-            defaultInputInterface='keyboard'
-          />
-        </main>
-      )}
-    </ThemeProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 

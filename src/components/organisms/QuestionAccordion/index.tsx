@@ -39,6 +39,7 @@ export const QuestionAccordion: FC<QuestionAccordionProps> = ({
       preview={lines.join(' ')}
       color={color}
       customStyle={customStyle}
+      defaultOpen
     >
       {lines.map((line, index) => (
         <Paragraph key={index} color={contentColor} size="md" weight="medium">

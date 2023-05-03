@@ -37,6 +37,11 @@ export type AccordionProps = {
   color: ThemeBaseColorName;
 
   /**
+   * If true, the accordion box will be opened by default.
+   */
+  defaultOpen?: boolean;
+
+  /**
    * Custom style
    * */
   customStyle?: Interpolation<Theme>;
@@ -52,6 +57,7 @@ export const Accordion: FC<AccordionProps> = ({
   children,
   color,
   customStyle,
+  defaultOpen = false,
 }) => {
   /**
    * If true, the accordion box will be opened and the content will be visible.
@@ -60,7 +66,7 @@ export const Accordion: FC<AccordionProps> = ({
    * If false, the accordion box will be closed and the content will be hidden.
    * And the icon on the right side of the head will be chevronDown.
    */
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
 
   const toggleOpen = () => {
     setOpen(!open);

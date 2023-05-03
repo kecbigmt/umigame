@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
 
-import { Theme, darkTheme } from './theme';
+import { Theme, darkTheme as theme } from './theme';
 import { ChatMessage } from './domain';
 import { TopAppBar } from './components/molecules/TopAppBar';
 import { ChatTimeline } from './components/organisms/ChatTimeline';
@@ -119,7 +119,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Global styles={globalStyle} />
       <header css={headerStyle}>
         <TopAppBar

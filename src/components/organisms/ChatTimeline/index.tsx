@@ -64,7 +64,7 @@ export const ChatTimeline: FC<ChatTimelineProps> = ({
           color="surface.variant"
           position="left"
           customStyle={chatBubbleStyle}
-        >{'loading...'}</ChatBubble>
+        >{'考え中...'}</ChatBubble>
       )}
     </div>
   );

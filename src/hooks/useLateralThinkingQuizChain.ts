@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-
 import { LLMChain } from 'langchain/chains';
 import { OpenAI } from 'langchain/llms/openai';
 import { BufferMemory } from 'langchain/memory';
 import { PromptTemplate } from 'langchain/prompts';
-import { Quiz } from '../domain/quiz';
+
+import { Quiz } from '../domain';
 
 export const useLateralThinkingQuizChain = (language: string, modelName: string, openAIApiKey: string | undefined, defaultQuiz?: Quiz): {
     chain: LLMChain, 

@@ -1,4 +1,4 @@
-import { Quiz } from "./domain/quiz";
+import { Quiz } from "./domain";
 
 export const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
 

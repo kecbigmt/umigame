@@ -1,6 +1,6 @@
 export type Quiz = {
     title: string;
-    question: string;
-    answer: string;
-    answerKey: string;
+    mystery: string;
+    truth: string;
+    core: string
 }

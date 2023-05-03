@@ -10,12 +10,6 @@ import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useLateralThinkingQuizChain } from './hooks/useLateralThinkingQuizChain';
 
 const openAIApiKey = import.meta.env.VITE_OPENAI_API_KEY;
-const quiz = {
-  title: import.meta.env.VITE_QUIZ_TITLE as string,
-  question: import.meta.env.VITE_QUIZ_QUESTION as string,
-  answer: import.meta.env.VITE_QUIZ_ANSWER as string,
-  answerKey: import.meta.env.VITE_QUIZ_ANSWER_KEY as string,
-};
 
 const globalStyle = (theme: Theme) => css`
   html {
@@ -76,7 +70,11 @@ const chatInputBar = css`
 `;
 
 function App() {
-  const chain = useLateralThinkingQuizChain(quiz, openAIApiKey);
+  const quizSet = useLateralThinkingQuizChain(
+    'Japanese',
+    'gpt-4',
+    openAIApiKey
+  );
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [botLoading, setBotLoading] = useState(false);
@@ -90,6 +88,8 @@ function App() {
   }, [messages]);
 
   const onSubmitMessage = async (message: string) => {
+    if (!quizSet) return;
+
     const newMessages: ChatMessage[] = [
       ...messages,
       { text: message, owner: 'user' },
@@ -97,7 +97,7 @@ function App() {
     setMessages(newMessages);
     setBotLoading(true);
 
-    chain
+    quizSet.chain
       .call({ input: message })
       .then((res) => {
         setBotLoading(false);
@@ -124,29 +124,33 @@ function App() {
       <header css={headerStyle}>
         <TopAppBar
           color="surface"
-          title={quiz.title}
+          title={quizSet ? quizSet.quiz.title : '問題を考えています...'}
           trailingAction={{
             icon: 'threeDots',
             onClick: () => console.log('settings'),
           }}
         />
-        <QuestionAccordion
-          color="surface.variant"
-          lines={[quiz.question]}
-          customStyle={quizAccordionStyle}
-        />
+        {quizSet && (
+          <QuestionAccordion
+            color="surface.variant"
+            lines={[quizSet.quiz.mystery]}
+            customStyle={quizAccordionStyle}
+          />
+        )}
       </header>
-      <main css={mainStyle}>
-        <ChatTimeline
-          messages={messages}
-          botLoading={botLoading}
-          customStyle={timelineStyle}
-        />
-        <ChatInputBar
-          onSubmitMessage={onSubmitMessage}
-          customStyle={chatInputBar}
-        />
-      </main>
+      {quizSet && (
+        <main css={mainStyle}>
+          <ChatTimeline
+            messages={messages}
+            botLoading={botLoading}
+            customStyle={timelineStyle}
+          />
+          <ChatInputBar
+            onSubmitMessage={onSubmitMessage}
+            customStyle={chatInputBar}
+          />
+        </main>
+      )}
     </ThemeProvider>
   );
 }

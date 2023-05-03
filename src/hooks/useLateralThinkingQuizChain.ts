@@ -54,7 +54,7 @@ type Quiz = {
 # Output Results
 `;
 
-        const llm = new OpenAI({ openAIApiKey, modelName, temperature: 0 });
+        const llm = new OpenAI({ openAIApiKey, modelName, temperature: 1.0 });
         llm.call(prompt).then((res) => {
             const quiz = JSON.parse(res);
             setQuiz(quiz);

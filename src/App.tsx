@@ -7,6 +7,8 @@ import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useSubmitMessage } from './hooks/useSubmitMessage';
 import { useQuiz } from './hooks/quiz';
+import { useEffect, useRef } from 'react';
+import { useAutoScrollDown } from './hooks/useAutoScrollDown';
 
 const globalStyle = (theme: Theme) => css`
   html {
@@ -69,16 +71,10 @@ const chatInputBar = css`
 function App() {
   const quiz = useQuiz();
   const submitMessage = useSubmitMessage();
+  const mainRef = useRef<HTMLDivElement>(null);
 
-  /*
   // When new message is added, scroll to bottom
-  useEffect(() => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [messages]);
-  */
+  useAutoScrollDown(mainRef);
 
   const onSubmitMessage = async (message: string) => {
     submitMessage(message);
@@ -111,7 +107,7 @@ function App() {
         )}
       </header>
       {quiz && (
-        <main css={mainStyle}>
+        <main css={mainStyle} ref={mainRef}>
           <ChatTimeline customStyle={timelineStyle} />
           <ChatInputBar
             onSubmitMessage={onSubmitMessage}

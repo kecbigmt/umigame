@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, MouseEventHandler } from 'react';
+import { ChangeEvent, FC, MouseEventHandler, useEffect, useState } from 'react';
 import { css, Theme, Interpolation } from '@emotion/react';
 
 import { ThemeBaseColorName, getContentColorName } from '../../../theme';
@@ -68,8 +68,29 @@ export const ChatTextArea: FC<ChatTextAreaProps> = ({
     flex-shrink: 0;
   `;
 
+  // If true, the user is composing a message.
+  const [isComposing, setIsComposing] = useState(false);
+
+  // Listen to the composition events to prevent onPressEnter from firing when the user is composing a message.
+  useEffect(() => {
+    const onCompositionStart = () => {
+      setIsComposing(true);
+    };
+    const onCompositionEnd = () => {
+      setIsComposing(false);
+    };
+
+    document.addEventListener('compositionstart', onCompositionStart);
+    document.addEventListener('compositionend', onCompositionEnd);
+
+    return () => {
+      document.removeEventListener('compositionstart', onCompositionStart);
+      document.removeEventListener('compositionend', onCompositionEnd);
+    };
+  }, []);
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (onPressEnter && e.key === 'Enter' && !e.shiftKey) {
+    if (onPressEnter && e.key === 'Enter' && !e.shiftKey && !isComposing) {
       e.preventDefault();
       onPressEnter(value);
     }

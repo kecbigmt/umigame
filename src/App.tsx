@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
 
 import { Theme, darkTheme as theme } from './theme';
@@ -7,7 +8,6 @@ import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
 import { useSubmitMessage } from './hooks/useSubmitMessage';
 import { useQuiz } from './hooks/quiz';
-import { useEffect, useRef } from 'react';
 import { useAutoScrollDown } from './hooks/useAutoScrollDown';
 
 const globalStyle = (theme: Theme) => css`

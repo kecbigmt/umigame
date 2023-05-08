@@ -1,23 +1,11 @@
 import { FC } from 'react';
 import { css, Theme, Interpolation } from '@emotion/react';
 
-import { ChatHistory } from '../../../domain';
 import { ChatBubble } from '../../molecules/ChatBubble';
+import { useRecoilValue } from 'recoil';
+import { chatMessageIDArrayState, chatMessageState } from '../../../dataflow';
 
 export type ChatTimelineProps = {
-  /**
-   * Chat message items.
-   * They are displayed in the order of the array.  
-   * User message is on the right, bot message is on the left.
-   * */
-  messages: ChatHistory;
-
-  /**
-   * Loading state of the bot.
-   * If true, loading indicator will be displayed on the left side of the chat history.
-   * */
-  botLoading?: boolean;
-
   /**
    * Custom style
    * */
@@ -31,11 +19,7 @@ const chatBubbleStyle = css`
 /**
  * ChatTimeline component
  * */
-export const ChatTimeline: FC<ChatTimelineProps> = ({
-  messages,
-  botLoading = false,
-  customStyle,
-}) => {
+export const ChatTimeline: FC<ChatTimelineProps> = ({ customStyle }) => {
   const chatHistoryStyle = (_theme: Theme) => css`
     display: flex;
     flex-direction: column;
@@ -44,28 +28,34 @@ export const ChatTimeline: FC<ChatTimelineProps> = ({
 		gap: 0.5rem;
   `;
 
+  const chatMessageIDArray = useRecoilValue(chatMessageIDArrayState);
+
   return (
     <div css={[chatHistoryStyle, customStyle]}>
-      {messages.map((message, index) => (
-        <ChatBubble
-          key={index}
-          color={message.owner === 'user' ? 'secondary' : 'surface.variant'}
-          position={message.owner === 'user' ? 'right' : 'left'}
-					customStyle={css`
-            ${chatBubbleStyle}
-						margin-${message.owner === 'user' ? 'left' : 'right'}: auto;
-					`}
-        >
-          {message.text}
-        </ChatBubble>
+      {chatMessageIDArray.map((chatMessageID) => (
+        <ChatTimelineItem key={chatMessageID} chatMessageID={chatMessageID} />
       ))}
-      {botLoading && (
-        <ChatBubble
-          color="surface.variant"
-          position="left"
-          customStyle={chatBubbleStyle}
-        >{'考え中...'}</ChatBubble>
-      )}
     </div>
+  );
+};
+
+type ChatTimelineItemProps = {
+  chatMessageID: string;
+};
+
+const ChatTimelineItem: FC<ChatTimelineItemProps> = ({ chatMessageID }) => {
+  const message = useRecoilValue(chatMessageState(chatMessageID));
+
+  return (
+    <ChatBubble
+      color={message.owner === 'user' ? 'secondary' : 'surface.variant'}
+      position={message.owner === 'user' ? 'right' : 'left'}
+      customStyle={css`
+        ${chatBubbleStyle}
+        margin-${message.owner === 'user' ? 'left' : 'right'}: auto;
+      `}
+    >
+      {message.body}
+    </ChatBubble>
   );
 };

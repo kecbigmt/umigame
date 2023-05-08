@@ -1,6 +1,10 @@
+export type ChatMessageID = string;
+
+export type ChatMessageOwner = 'user' | 'bot';
+
 export type ChatMessage = {
-    owner: 'user' | 'bot'; // TODO: add 'friend' when multiple users are supported
-    text: string;
-};
+    owner: ChatMessageOwner;
+    body: string;
+}
 
 export type ChatHistory = ChatMessage[];

@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
 import { Global, ThemeProvider, css } from '@emotion/react';
-import { RecoilRoot } from 'recoil';
 
 import { Theme, darkTheme as theme } from './theme';
-import { ChatMessage } from './domain';
 import { TopAppBar } from './components/molecules/TopAppBar';
 import { ChatTimeline } from './components/organisms/ChatTimeline';
 import { ChatInputBar } from './components/organisms/ChatInputBar';
 import { QuestionAccordion } from './components/organisms/QuestionAccordion';
-import { useLateralThinkingQuizChain } from './hooks/useLateralThinkingQuizChain';
-import { openAIApiKey, quiz } from './env';
+import { useSubmitMessage } from './hooks/useSubmitMessage';
+import { useQuiz } from './hooks/quiz';
 
 const globalStyle = (theme: Theme) => css`
   html {
@@ -70,16 +67,10 @@ const chatInputBar = css`
 `;
 
 function App() {
-  const quizSet = useLateralThinkingQuizChain(
-    'Japanese',
-    'gpt-4',
-    openAIApiKey,
-    quiz
-  );
+  const quiz = useQuiz();
+  const submitMessage = useSubmitMessage();
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [botLoading, setBotLoading] = useState(false);
-
+  /*
   // When new message is added, scroll to bottom
   useEffect(() => {
     window.scrollTo({
@@ -87,75 +78,49 @@ function App() {
       behavior: 'smooth',
     });
   }, [messages]);
+  */
 
   const onSubmitMessage = async (message: string) => {
-    if (!quizSet) return;
-
-    const newMessages: ChatMessage[] = [
-      ...messages,
-      { text: message, owner: 'user' },
-    ];
-    setMessages(newMessages);
-    setBotLoading(true);
-
-    quizSet.chain
-      .call({ input: message })
-      .then((res) => {
-        setBotLoading(false);
-        console.log(res);
-
-        const responseMessage = res['response'];
-        if (typeof responseMessage !== 'string')
-          throw new Error('Invalid response from OpenAI API');
-
-        setMessages([...newMessages, { text: responseMessage, owner: 'bot' }]);
-      })
-      .catch(() => {
-        setBotLoading(false);
-        setMessages([
-          ...newMessages,
-          { text: 'エラーが発生しました。', owner: 'bot' },
-        ]);
-      });
+    submitMessage(message);
+    
+    // Scroll to bottom
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
   };
 
   return (
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <Global styles={globalStyle} />
-        <header css={headerStyle}>
-          <TopAppBar
-            color="surface"
-            title={quizSet ? quizSet.quiz.title : '問題を考えています...'}
-            trailingAction={{
-              icon: 'threeDots',
-              onClick: () => console.log('settings'),
-            }}
+    <ThemeProvider theme={theme}>
+      <Global styles={globalStyle} />
+      <header css={headerStyle}>
+        <TopAppBar
+          color="surface"
+          title={quiz ? quiz.title : '問題を考えています...'}
+          trailingAction={{
+            icon: 'threeDots',
+            onClick: () => console.log('settings'),
+          }}
+        />
+        {quiz && (
+          <QuestionAccordion
+            color="surface.variant"
+            lines={[quiz.mystery]}
+            customStyle={quizAccordionStyle}
           />
-          {quizSet && (
-            <QuestionAccordion
-              color="surface.variant"
-              lines={[quizSet.quiz.mystery]}
-              customStyle={quizAccordionStyle}
-            />
-          )}
-        </header>
-        {quizSet && (
-          <main css={mainStyle}>
-            <ChatTimeline
-              messages={messages}
-              botLoading={botLoading}
-              customStyle={timelineStyle}
-            />
-            <ChatInputBar
-              onSubmitMessage={onSubmitMessage}
-              customStyle={chatInputBar}
-              defaultInputInterface="keyboard"
-            />
-          </main>
         )}
-      </ThemeProvider>
-    </RecoilRoot>
+      </header>
+      {quiz && (
+        <main css={mainStyle}>
+          <ChatTimeline customStyle={timelineStyle} />
+          <ChatInputBar
+            onSubmitMessage={onSubmitMessage}
+            customStyle={chatInputBar}
+            defaultInputInterface="keyboard"
+          />
+        </main>
+      )}
+    </ThemeProvider>
   );
 }
 
